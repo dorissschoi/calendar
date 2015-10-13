@@ -1,7 +1,9 @@
-proj = 'todo'
+proj = 'calendar'
+
+projdb	= 'todo'
 
 app =
-	url:	"http://localhost:3000/#{proj}"
+	url:	"http://localhost:3001/#{proj}"
 	
 oauth2 =
 	url:	'https://mppsrc.ogcio.hksarg'
@@ -16,7 +18,7 @@ env =
 		admin:	'Admin'
 	
 	db:
-		url:		"mongodb://#{proj}rw:pass1234@localhost/#{proj}"
+		url:		"mongodb://#{projdb}rw:pass1234@localhost/#{projdb}"
 	
 	app:
 		url:		app.url

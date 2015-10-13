@@ -28,82 +28,82 @@ module.config ($stateProvider, $urlRouterProvider) ->
 				templateUrl: "templates/search.html"
 	
     
-    # My todo list page
-	$stateProvider.state 'app.mytodopage',
-		url: "/todo/mytodopage"
+    # My calendar list page
+	$stateProvider.state 'app.mycalendarpage',
+		url: "/calendar/mycalendarpage"
 		cache: false
 		views:
 			'menuContent':
-				templateUrl: "templates/todo/mylistpage.html"
-				controller: 'MyTodoListPageCtrl'
+				templateUrl: "templates/calendar/mylistpage.html"
+				controller: 'MyCalendarListPageCtrl'
     		
-	# My upcoming todo list
+	# My upcoming calendar list
 	$stateProvider.state 'app.upcomingList',
-		url: "/todo/upcomingList"
+		url: "/calendar/upcomingList"
 		cache: false
 		views:
 			'menuContent':
-				templateUrl: "templates/todo/upcominglist.html"
+				templateUrl: "templates/calendar/upcominglist.html"
 				controller: 'UpcomingListCtrl'
 
-	$stateProvider.state 'app.createTodo',
-		url: "/todo/create"
+	$stateProvider.state 'app.createCalendar',
+		url: "/calendar/create"
 		cache: false
 		views:
 			'menuContent':
-				templateUrl: "templates/todo/create.html"
-				controller: 'TodoCtrl'
+				templateUrl: "templates/calendar/create.html"
+				controller: 'CalendarCtrl'
 	
-	$stateProvider.state 'app.readTodo',
-		url: "/todo/read"
-		params: SelectedTodo: null, myTodoCol: null, backpage: null
+	$stateProvider.state 'app.readCalendar',
+		url: "/calendar/read"
+		params: SelectedCalendar: null, myCalendarCol: null, backpage: null
 		cache: false
 		views:
 			'menuContent':
-				templateUrl: "templates/todo/read.html"
-				controller: 'TodoReadCtrl'
+				templateUrl: "templates/calendar/read.html"
+				controller: 'CalendarReadCtrl'
 				
-	$stateProvider.state 'app.editTodo',
-		url: "/todo/edit"
-		params: SelectedTodo: null, myTodoCol: null, backpage: null
+	$stateProvider.state 'app.editCalendar',
+		url: "/calendar/edit"
+		params: SelectedCalendar: null, myCalendarCol: null, backpage: null
 		cache: false
 		views:
 			'menuContent':
-				templateUrl: "templates/todo/edit.html"
-				controller: 'TodoEditCtrl'				
+				templateUrl: "templates/calendar/edit.html"
+				controller: 'CalendarEditCtrl'				
 
-	# My todo day
+	# My calendar day
 	$stateProvider.state 'app.today',
-		url: "/todo/today"
+		url: "/calendar/today"
 		cache: false
 		views:
 			'menuContent':
-				templateUrl: "templates/todo/today.html"
+				templateUrl: "templates/calendar/today.html"
 				controller: 'TodayCtrl'
 					
-	# My todo week
+	# My calendar week
 	$stateProvider.state 'app.week',
-		url: "/todo/week"
+		url: "/calendar/week"
 		cache: false
 		views:
 			'menuContent':
-				templateUrl: "templates/todo/week.html"
+				templateUrl: "templates/calendar/week.html"
 				controller: 'WeekCtrl'											
 	
-	# My todo group by project
-	$stateProvider.state 'app.projectTodo',
-		url: "/todo/project"
+	# My calendar group by project
+	$stateProvider.state 'app.projectCalendar',
+		url: "/calendar/project"
 		cache: false
 		views:
 			'menuContent':
-				templateUrl: "templates/todo/project.html"
-				controller: 'ProjectTodoCtrl'
+				templateUrl: "templates/calendar/project.html"
+				controller: 'ProjectCalendarCtrl'
 				
-	$urlRouterProvider.otherwise('/todo/project')
-	#$urlRouterProvider.otherwise('/todo/week')	
-	#$urlRouterProvider.otherwise('/todo/today')						
-	#$urlRouterProvider.otherwise('/todo/cal')														
-	#$urlRouterProvider.otherwise('/todo/upcomingList')
-	#$urlRouterProvider.otherwise('/todo/mytodopage')
+	$urlRouterProvider.otherwise('/calendar/project')
+	#$urlRouterProvider.otherwise('/calendar/week')	
+	#$urlRouterProvider.otherwise('/calendar/today')						
+	#$urlRouterProvider.otherwise('/calendar/cal')														
+	#$urlRouterProvider.otherwise('/calendar/upcomingList')
+	#$urlRouterProvider.otherwise('/calendar/mycalendarpage')
 	
 	

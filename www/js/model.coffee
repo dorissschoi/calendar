@@ -243,10 +243,10 @@ model = (ActiveRecord, $rootScope, $upload, platform) ->
 			@selected()?.group
 
 
-	class Todo extends Model
+	class Calendar extends Model
 		$idAttribute: '_id'
 		
-		$urlRoot: "#{env.serverUrl()}/api/todo/"
+		$urlRoot: "#{env.serverUrl()}/api/calendar/"
 		
 		$save: (values, opts) ->
 			if @$hasChanged()
@@ -255,19 +255,18 @@ model = (ActiveRecord, $rootScope, $upload, platform) ->
 				return new Promise (fulfill, reject) ->
 					fulfill @		
 		
-	class MyTodoList extends PageableCollection
+	class MyCalendarList extends PageableCollection
 		$idAttribute: '_id'
 	
-		$urlRoot: "#{env.serverUrl()}/api/mytodopage"
+		$urlRoot: "#{env.serverUrl()}/api/mycalendarpage"
 		
 		$parseModel: (res, opts) ->
 			res.dateStart = new Date(Date.parse(res.dateStart))
 			res.dateEnd = new Date(Date.parse(res.dateEnd))
-			return new Todo res
+			return new Calendar res
 		
 		$parse: (res, opts) ->
 			_.each res.results, (value, key) =>
-				#res.results[key] = new Todo res.results[key]
 				res.results[key] = @$parseModel(res.results[key], opts)
 			return res
 
@@ -276,12 +275,12 @@ model = (ActiveRecord, $rootScope, $upload, platform) ->
 	class UpcomingList extends PageableCollection
 		$idAttribute: '_id'
 	
-		$urlRoot: "#{env.serverUrl()}/api/myupcomingtodo"
+		$urlRoot: "#{env.serverUrl()}/api/myupcomingcalendar"
 			
 		$parseModel: (res, opts) ->
 			res.dateStart = new Date(Date.parse(res.dateStart))
 			res.dateEnd = new Date(Date.parse(res.dateEnd))
-			return new Todo res
+			return new Calendar res
 			
 		$parse: (res, opts) ->
 			_.each res.results, (value, key) =>
@@ -289,22 +288,20 @@ model = (ActiveRecord, $rootScope, $upload, platform) ->
 			return res
 			
 
-	class TodoRangeList extends Collection
+	class CalendarRangeList extends Collection
 		$idAttribute: '_id'
 	
-		$urlRoot: "#{env.serverUrl()}/api/todo"
+		$urlRoot: "#{env.serverUrl()}/api/calendar"
 		
 		$parseModel: (res, opts) ->
 			res.dateStart = new Date(Date.parse(res.dateStart))
 			res.dateEnd = new Date(Date.parse(res.dateEnd))
-			return new Todo res
+			return new Calendar res
 			
 		$parse: (res, opts) ->
 			_.each res.results, (value, key) =>
 				res.results[key] = @$parseModel(res.results[key], opts)
 			return res	
-			#return res.results	
-			#return @$parseModel(res, opts)	
 				
 		
 	Model:		Model
@@ -315,10 +312,10 @@ model = (ActiveRecord, $rootScope, $upload, platform) ->
 	Acl:		Acl
 	UserGrps:	UserGrps
 	FileGrps:	FileGrps
-	Todo:		Todo
-	MyTodoList:	MyTodoList
+	Calendar:	Calendar
+	MyCalendarList:	MyCalendarList
 	UpcomingList:	UpcomingList
-	TodoRangeList: 	TodoRangeList
+	CalendarRangeList: 	CalendarRangeList
 				
 config = ->
 	return

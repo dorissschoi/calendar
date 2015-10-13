@@ -192,7 +192,7 @@ FileSchema.pre 'remove', (next) ->
 
 File = mongoose.model 'File', FileSchema
 
-TodoSchema = new mongoose.Schema
+CalendarSchema = new mongoose.Schema
 	task:		{ type: String, required: true }
 	location:	{ type: String }
 	project:	{ type: String }
@@ -202,7 +202,7 @@ TodoSchema = new mongoose.Schema
 	createdBy:		{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 	updatedBy:		{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 	
-TodoSchema.statics =
+CalendarSchema.statics =
 	search_fields: ->
 		return ['task', 'dateStart', dateEnd]
 	ordering_fields: ->
@@ -210,7 +210,7 @@ TodoSchema.statics =
 	ordering: ->
 		return 'dateStart'
 
-Todo = mongoose.model 'Todo', TodoSchema
+Calendar = mongoose.model 'Calendar', CalendarSchema
 		
 module.exports = 
 	Permission:	Permission
@@ -218,4 +218,4 @@ module.exports =
 	User: 		User
 	FileUtil:	FileUtil
 	File: 		File
-	Todo:		Todo
+	Calendar:		Calendar

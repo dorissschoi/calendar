@@ -1,15 +1,15 @@
 <ion-header-bar class="item-input-inset">
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
     </button>
-    <h1 class='title'>Upcoming Todo</h1>
+    <h1 class='title'>Upcoming Calendar</h1>
     
-    <button class="button button-clear button-positive" ui-sref="app.createTodo">New</button>  
+    <button class="button button-clear button-positive" ui-sref="app.createCalendar">New</button>  
 </ion-header-bar>
 
 <ion-content >
 
 <ion-list>
-	<div class="daterow" ng-repeat="(oStDate, lTasks) in controller.collection.todos | orderBy:['oStDate']"
+	<div class="daterow" ng-repeat="(oStDate, lTasks) in controller.collection.calendars | orderBy:['oStDate']"
 		>
 			
 	  <div class='row datelist'>

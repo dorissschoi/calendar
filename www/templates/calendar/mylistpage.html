@@ -1,9 +1,9 @@
 <ion-header-bar class="item-input-inset">
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
     </button>
-    <h1 class='title'>My Todo Page</h1>
+    <h1 class='title'>My Calendar Page</h1>
     
-    <button class="button button-clear button-positive" ui-sref="app.createTodo">New</button>  
+    <button class="button button-clear button-positive" ui-sref="app.createCalendar">New</button>  
 </ion-header-bar>
 <div class="bar bar-subheader item-input-inset mylistfilter">
 	<label class="item-input-wrapper">
@@ -15,8 +15,8 @@
 
 	<ion-list>
 		<ion-item 
-			ng-repeat="model in controller.collection.models  | todosFilter:search"
-			ui-sref="app.editTodo({ SelectedTodo: model, myTodoCol: null, backpage: 'app.mytodopage'})"
+			ng-repeat="model in controller.collection.models  | calendarsFilter:search"
+			ui-sref="app.editCalendar({ SelectedCalendar: model, myCalendarCol: null, backpage: 'app.mycalendarpage'})"
 			
 			>
 				<div class='row'>

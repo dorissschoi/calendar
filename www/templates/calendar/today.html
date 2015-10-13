@@ -3,7 +3,7 @@
     </button>
     <h1 class='title'>{{fmDate | date: 'EEE d MMM yyyy'}}</h1>
     
-    <button class="button button-clear button-positive" ui-sref="app.createTodo">New</button>  
+    <button class="button button-clear button-positive" ui-sref="app.createCalendar">New</button>  
 </ion-header-bar>
 
 <ion-header-bar class="bar  bar-subheader bar-light">
@@ -95,10 +95,10 @@
 		  <div class="tg-gutter">
 
 			
-			<div ng-repeat="todo in controller.collection.todos  | orderBy:['left']">
-				<div ui-sref="app.editTodo({ SelectedTodo: todo, myTodoCol: null, backpage: 'app.today'})" 
-				class="chip {{todo.style}}" style="top:{{todo.top}}px;left:{{todo.left}}%;width:{{todo.width}}%" >
-					<div class="cbrd" style="height:{{todo.height}}px;">{{todo.task}}</div>
+			<div ng-repeat="calendar in controller.collection.calendars  | orderBy:['left']">
+				<div ui-sref="app.editCalendar({ SelectedCalendar: calendar, myCalendarCol: null, backpage: 'app.today'})" 
+				class="chip {{calendar.style}}" style="top:{{calendar.top}}px;left:{{calendar.left}}%;width:{{calendar.width}}%" >
+					<div class="cbrd" style="height:{{calendar.height}}px;">{{calendar.task}}</div>
 				</div>
 			</div>
 			

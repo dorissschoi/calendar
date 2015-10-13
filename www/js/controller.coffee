@@ -16,8 +16,8 @@ MenuCtrl = ($scope) ->
 	$scope.env = env
 	$scope.navigator = navigator
 					
-TodoEditCtrl = ($rootScope, $scope, $state, $stateParams, $location, model, $filter) ->
-	class TodoEditView  			
+CalendarEditCtrl = ($rootScope, $scope, $state, $stateParams, $location, model, $filter) ->
+	class CalendarEditView  			
 
 		constructor: (opts = {}) ->
 			_.each @events, (handler, event) =>
@@ -46,8 +46,8 @@ TodoEditCtrl = ($rootScope, $scope, $state, $stateParams, $location, model, $fil
 			else	
 				$state.go $stateParams.backpage, {}, { reload: true }
 			
-	$scope.collection = $stateParams.myTodoCol
-	$scope.model = $stateParams.SelectedTodo
+	$scope.collection = $stateParams.myCalendarCol
+	$scope.model = $stateParams.SelectedCalendar
 	$scope.model.newtask = $scope.model.task
 	$scope.model.newlocation = $scope.model.location
 	$scope.model.newproject = $scope.model.project
@@ -131,23 +131,23 @@ TodoEditCtrl = ($rootScope, $scope, $state, $stateParams, $location, model, $fil
 					$scope.timePickerStartObject.inputEpochTime = val
 		return			
 		
-	$scope.controller = new TodoEditView model: $scope.model
+	$scope.controller = new CalendarEditView model: $scope.model
 	
-TodoCtrl = ($rootScope, $scope, $state, $stateParams, $location, model, $filter) ->
-	class TodoView  			
+CalendarCtrl = ($rootScope, $scope, $state, $stateParams, $location, model, $filter) ->
+	class CalendarView  			
 
 		constructor: (opts = {}) ->
 			_.each @events, (handler, event) =>
 				$scope.$on event, @[handler]
 			@model = opts.model
-			$scope.todo = {task: ''}
+			$scope.calendar = {task: ''}
 				
 		add: ->
-			@model = new model.Todo
-			@model.task = $scope.todo.task
-			@model.location = $scope.todo.location
-			@model.project = $scope.todo.project
-			@model.notes = $scope.todo.notes
+			@model = new model.Calendar
+			@model.task = $scope.calendar.task
+			@model.location = $scope.calendar.location
+			@model.project = $scope.calendar.project
+			@model.notes = $scope.calendar.notes
 			$scope.endDate = $scope.datepickerObjectEnd.inputDate
 			$scope.startDate = $scope.datepickerObjectStart.inputDate
 			$scope.startTime = $scope.timePickerStartObject.inputEpochTime
@@ -157,11 +157,10 @@ TodoCtrl = ($rootScope, $scope, $state, $stateParams, $location, model, $filter)
 			output = new Date($scope.endDate.getFullYear(),  $scope.endDate.getMonth(),   $scope.endDate.getDate(), parseInt($scope.endTime / 3600), $scope.endTime / 60 % 60)
 			@model.dateEnd = output
 			@model.$save().catch alert
-			$scope.todo.task = ''
-			#$rootScope.$broadcast 'todo:getUpcomingListView'
+			$scope.calendar.task = ''
 			$state.go 'app.upcomingList', {}, { reload: true, cache: false }
 		
-	$scope.controller = new TodoView model: $scope.model
+	$scope.controller = new CalendarView model: $scope.model
 	
 	# ionic-datepicker 0.9
 	currDate = new Date
@@ -243,18 +242,18 @@ TodoCtrl = ($rootScope, $scope, $state, $stateParams, $location, model, $filter)
 					$scope.timePickerStartObject.inputEpochTime = val
 		return
 
-	$scope.controllername = 'TodoCtrl'
+	$scope.controllername = 'CalendarCtrl'
 				
 			
-MyTodoListPageCtrl = ($rootScope, $scope, $state, $stateParams, $location, model) ->
-	class MyTodoListPageView
+MyCalendarListPageCtrl = ($rootScope, $scope, $state, $stateParams, $location, model) ->
+	class MyCalendarListPageView
 		constructor: (opts = {}) ->
 			_.each @events, (handler, event) =>
 				$scope.$on event, @[handler]
 			@collection = opts.collection
 
-		remove: (todo) ->
-			@model.remove(todo)
+		remove: (calendar) ->
+			@model.remove(calendar)
 	
 	$scope.loadMore = ->
 		$scope.collection.$fetch()
@@ -262,10 +261,10 @@ MyTodoListPageCtrl = ($rootScope, $scope, $state, $stateParams, $location, model
 				$scope.$broadcast('scroll.infiniteScrollComplete')
 			.catch alert
 					
-	$scope.collection = new model.MyTodoList()
+	$scope.collection = new model.MyCalendarList()
 	$scope.collection.$fetch().then ->
 		$scope.$apply ->	
-			$scope.controller = new MyTodoListPageView collection: $scope.collection
+			$scope.controller = new MyCalendarListPageView collection: $scope.collection
 		
 
 UpcomingListCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model) ->
@@ -275,21 +274,21 @@ UpcomingListCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter
 				$scope.$on event, @[handler]
 			@collection = opts.collection
 
-		remove: (todo) ->
-			@collection.remove(todo)
-			$rootScope.$broadcast 'todo:getUpcomingListView'
+		remove: (calendar) ->
+			@collection.remove(calendar)
+			$rootScope.$broadcast 'calendar:getUpcomingListView'
 			
 		read: (selectedModel) ->
-			$state.go 'app.readTodo', { SelectedTodo: selectedModel, myTodoCol: null, backpage: 'app.upcomingList' }, { reload: true }
+			$state.go 'app.readCalendar', { SelectedCalendar: selectedModel, myCalendarCol: null, backpage: 'app.upcomingList' }, { reload: true }
 
 		edit: (selectedModel) ->
-			$state.go 'app.editTodo', { SelectedTodo: selectedModel, myTodoCol: null, backpage: 'app.upcomingList' }, { reload: true }
+			$state.go 'app.editCalendar', { SelectedCalendar: selectedModel, myCalendarCol: null, backpage: 'app.upcomingList' }, { reload: true }
 
 		$scope.formatDate = (inStr, format) ->
 			inStr = new Date(parseInt(inStr))
 			return $filter("date")(inStr, format)
 
-	$rootScope.$on 'todo:getUpcomingListView', ->
+	$rootScope.$on 'calendar:getUpcomingListView', ->
 		#start
 		$scope.collection = new model.UpcomingList()
 		$scope.collection.$fetch().then ->
@@ -297,7 +296,7 @@ UpcomingListCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter
 				$scope.reorder()
 		#end		
 		
-	$rootScope.$on 'todo:refreshView', ->
+	$rootScope.$on 'calendar:refreshView', ->
 		#start
 		$scope.reorder()
 		#end
@@ -317,7 +316,7 @@ UpcomingListCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter
 			tomorrow = new Date(tomorrow.setHours(0,0,0,0))
 			i=0
 			while i <= diffDays
-				@newmodel = new model.Todo element
+				@newmodel = new model.Calendar element
 				@newmodel.oStDate = tomorrow
 				if i == 0
 					@newmodel.oStTime = element.dateStart
@@ -345,7 +344,7 @@ UpcomingListCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter
 			item.oStDate.setHours(0,0,0,0)
 		)	
 											
-		$scope.collection.todos = $scope.groupedByDate
+		$scope.collection.calendars = $scope.groupedByDate
 		$scope.controller = new UpcomingListView collection: $scope.collection	
 			
 	$scope.loadMore = ->
@@ -353,33 +352,33 @@ UpcomingListCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter
 			.then ->
 				$scope.$broadcast('scroll.infiniteScrollComplete')
 				$scope.$apply ->
-					$rootScope.$broadcast 'todo:refreshView'
+					$rootScope.$broadcast 'calendar:refreshView'
 			.catch alert
 					
-	$rootScope.$broadcast 'todo:getUpcomingListView'
+	$rootScope.$broadcast 'calendar:getUpcomingListView'
 
-ProjectTodoCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model) ->
-	class ProjectTodoView
+ProjectCalendarCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model) ->
+	class ProjectCalendarView
 		constructor: (opts = {}) ->
 			_.each @events, (handler, event) =>
 				$scope.$on event, @[handler]
 			@collection = opts.collection
 
-		remove: (todo) ->
-			@collection.remove(todo)
-			$rootScope.$broadcast 'todo:getProjectTodoView'
+		remove: (calendar) ->
+			@collection.remove(calendar)
+			$rootScope.$broadcast 'calendar:getProjectCalendarView'
 			
 		read: (selectedModel) ->
-			$state.go 'app.readTodo', { SelectedTodo: selectedModel, myTodoCol: null, backpage: 'app.projectTodo' }, { reload: true }
+			$state.go 'app.readCalendar', { SelectedCalendar: selectedModel, myCalendarCol: null, backpage: 'app.projectCalendar' }, { reload: true }
 
 		edit: (selectedModel) ->
-			$state.go 'app.editTodo', { SelectedTodo: selectedModel, myTodoCol: null, backpage: 'app.projectTodo' }, { reload: true }
+			$state.go 'app.editCalendar', { SelectedCalendar: selectedModel, myCalendarCol: null, backpage: 'app.projectCalendar' }, { reload: true }
 		
 		$scope.formatDate = (inStr, format) ->
 			inStr = new Date(parseInt(inStr))
 			return $filter("date")(inStr, format)
 
-	$rootScope.$on 'todo:getProjectTodoView', ->
+	$rootScope.$on 'calendar:getProjectCalendarView', ->
 		#start
 		$scope.collection = new model.UpcomingList()
 		$scope.collection.$fetch({params: {order_by: 'project'}}).then ->
@@ -387,7 +386,7 @@ ProjectTodoCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter,
 				$scope.reorder()
 		#end		
 		
-	$rootScope.$on 'todo:refreshProjectTodoView', ->
+	$rootScope.$on 'calendar:refreshProjectCalendarView', ->
 		#start
 		$scope.reorder()
 		#end
@@ -407,7 +406,7 @@ ProjectTodoCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter,
 			tomorrow = new Date(tomorrow.setHours(0,0,0,0))
 			i=0
 			while i <= diffDays
-				@newmodel = new model.Todo element
+				@newmodel = new model.Calendar element
 				@newmodel.oStDate = tomorrow
 				if i == 0
 					@newmodel.oStTime = element.dateStart
@@ -443,18 +442,18 @@ ProjectTodoCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter,
 			$scope.p.push {project : element[0].project, 	models : group2	}	
 			
 		
-		$scope.collection.todos = $scope.p
-		$scope.controller = new ProjectTodoView collection: $scope.collection	
+		$scope.collection.calendars = $scope.p
+		$scope.controller = new ProjectCalendarView collection: $scope.collection	
 			
 	$scope.loadMore = ->
 		$scope.collection.$fetch()
 			.then ->
 				$scope.$broadcast('scroll.infiniteScrollComplete')
 				$scope.$apply ->
-					$rootScope.$broadcast 'todo:refreshProjectTodoView'
+					$rootScope.$broadcast 'calendar:refreshProjectCalendarView'
 			.catch alert
 					
-	$rootScope.$broadcast 'todo:getProjectTodoView'
+	$rootScope.$broadcast 'calendar:getProjectCalendarView'
 
 TodayCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model) ->
 	class TodayView
@@ -474,7 +473,7 @@ TodayCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model
 			$scope.fmDate = new Date($scope.fmDate.setHours(0,0,0,0))
 			$scope.toDate = new Date($scope.today)
 			$scope.toDate = new Date($scope.toDate.setHours(23,59,0,0))
-			$rootScope.$broadcast 'todo:getTodayView'		
+			$rootScope.$broadcast 'calendar:getTodayView'		
 		
 		nextDay: ->
 			$scope.today = $scope.today.setDate($scope.today.getDate()+1)
@@ -483,21 +482,21 @@ TodayCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model
 			$scope.fmDate = new Date($scope.fmDate.setHours(0,0,0,0))
 			$scope.toDate = new Date($scope.today)
 			$scope.toDate = new Date($scope.toDate.setHours(23,59,0,0))
-			$rootScope.$broadcast 'todo:getTodayView'	
+			$rootScope.$broadcast 'calendar:getTodayView'	
 			
-		remove: (todo) ->
-			@collection.remove(todo)
-			$rootScope.$broadcast 'todo:getTodayView'
+		remove: (calendar) ->
+			@collection.remove(calendar)
+			$rootScope.$broadcast 'calendar:getTodayView'
 			
 		read: (selectedModel) ->
-			$state.go 'app.readTodo', { SelectedTodo: selectedModel, myTodoCol: null, backpage: 'app.today' }, { reload: true }
+			$state.go 'app.readCalendar', { SelectedCalendar: selectedModel, myCalendarCol: null, backpage: 'app.today' }, { reload: true }
 
 		edit: (selectedModel) ->
-			$state.go 'app.editTodo', { SelectedTodo: selectedModel, myTodoCol: null, backpage: 'app.today' }, { reload: true }
+			$state.go 'app.editCalendar', { SelectedCalendar: selectedModel, myCalendarCol: null, backpage: 'app.today' }, { reload: true }
 
-	$rootScope.$on 'todo:getTodayView', ->
+	$rootScope.$on 'calendar:getTodayView', ->
 		#start
-		$scope.collection = new model.TodoRangeList()
+		$scope.collection = new model.CalendarRangeList()
 		$scope.collection.$fetch({params: {fmDate: $scope.fmDate, toDate: $scope.toDate}}).then ->
 			$scope.$apply ->
 				$scope.reorder()
@@ -510,7 +509,7 @@ TodayCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model
 		Etot = $scope.collection.models.length  
 		Ecnt = 1
 		angular.forEach $scope.collection.models, (element) ->
-			@newmodel = new model.Todo element
+			@newmodel = new model.Calendar element
 			#adjust fmDate, toDate
 			if element.dateStart < $scope.fmDate
 				@newmodel.dateStart = $scope.fmDate
@@ -540,7 +539,7 @@ TodayCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model
 			$scope.events.push @newmodel
 			Ecnt = Ecnt + 1
 		
-		$scope.collection.todos = $scope.events
+		$scope.collection.calendars = $scope.events
 		$scope.controller = new TodayView collection: $scope.collection	
 			
 	#start here
@@ -549,7 +548,7 @@ TodayCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model
 	$scope.fmDate = new Date($scope.fmDate.setHours(0,0,0,0))
 	$scope.toDate = new Date()
 	$scope.toDate = new Date($scope.toDate.setHours(23,59,0,0))
-	$rootScope.$broadcast 'todo:getTodayView'	
+	$rootScope.$broadcast 'calendar:getTodayView'	
 
 
 WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model) ->
@@ -569,7 +568,7 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 			$scope.fmDate = new Date($scope.fmDate.setHours(0,0,0,0))
 			$scope.toDate = $scope.week[6]
 			$scope.toDate = new Date($scope.toDate.setHours(23,59,0,0))
-			$rootScope.$broadcast 'todo:getWeekView'
+			$rootScope.$broadcast 'calendar:getWeekView'
 
 		nextWeek: ->
 			curr = new Date($scope.week[0])
@@ -581,7 +580,7 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 			$scope.fmDate = new Date($scope.fmDate.setHours(0,0,0,0))
 			$scope.toDate = $scope.week[6]
 			$scope.toDate = new Date($scope.toDate.setHours(23,59,0,0))
-			$rootScope.$broadcast 'todo:getWeekView'
+			$rootScope.$broadcast 'calendar:getWeekView'
 			
 		isToday: (d) ->
 			today = new Date
@@ -590,19 +589,19 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 			iDate.setHours(0,0,0,0)
 			return today.getTime() == iDate.getTime()
 			
-		remove: (todo) ->
-			@collection.remove(todo)
-			$rootScope.$broadcast 'todo:getWeekView'
+		remove: (calendar) ->
+			@collection.remove(calendar)
+			$rootScope.$broadcast 'calendar:getWeekView'
 			
 		read: (selectedModel) ->
-			$state.go 'app.readTodo', { SelectedTodo: selectedModel, myTodoCol: null, backpage: 'app.week' }, { reload: true }
+			$state.go 'app.readCalendar', { SelectedCalendar: selectedModel, myCalendarCol: null, backpage: 'app.week' }, { reload: true }
 
 		edit: (selectedModel) ->
-			$state.go 'app.editTodo', { SelectedTodo: selectedModel, myTodoCol: null, backpage: 'app.week' }, { reload: true }
+			$state.go 'app.editCalendar', { SelectedCalendar: selectedModel, myCalendarCol: null, backpage: 'app.week' }, { reload: true }
 
-	$rootScope.$on 'todo:getWeekView', ->
+	$rootScope.$on 'calendar:getWeekView', ->
 		#start
-		$scope.collection = new model.TodoRangeList()
+		$scope.collection = new model.CalendarRangeList()
 		$scope.collection.$fetch({params: {fmDate: $scope.fmDate, toDate: $scope.toDate}}).then ->
 			$scope.$apply ->
 				#$scope.reorder()
@@ -611,10 +610,10 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 	
 	
 	$scope.wkreorder = ->
-		#find todo day by day
+		#find calendar day by day
 		i = 0
-		wktodo = []
-		$scope.wktodo = new Array()
+		wkcalendar = []
+		$scope.wkcalendar = new Array()
 		while i < 7
 		  $scope.dayStart = $scope.week[i]
 		  $scope.dayStart = new Date($scope.dayStart.setHours(0,0,0,0))
@@ -623,10 +622,10 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 		  #if in a day, (StartA < EndB)  and  (EndA > StartB)
 		  angular.forEach $scope.collection.models, (element) ->
 		    if ((element.dateStart <= $scope.dayEnd) and (element.dateEnd >= $scope.dayStart))
-		      wktodo.push element
+		      wkcalendar.push element
 		  $scope.curr = i  
-		  $scope.wktodo[$scope.curr] = wktodo
-		  wktodo = [] 
+		  $scope.wkcalendar[$scope.curr] = wkcalendar
+		  wkcalendar = [] 
 		  $scope.reorder() 
 		  i++
 		  
@@ -634,10 +633,10 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 		#expand day range task
 		$scope.events = []
 		divLeft = 0
-		Etot = $scope.wktodo[$scope.curr].length   
+		Etot = $scope.wkcalendar[$scope.curr].length   
 		Ecnt = 1
-		angular.forEach $scope.wktodo[$scope.curr], (element) ->
-			@newmodel = new model.Todo element
+		angular.forEach $scope.wkcalendar[$scope.curr], (element) ->
+			@newmodel = new model.Calendar element
 			#adjust fmDate, toDate
 			if element.dateStart < $scope.dayStart
 				@newmodel.dateStart = $scope.dayStart
@@ -667,8 +666,8 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 			$scope.events.push @newmodel
 			Ecnt = Ecnt + 1
 		
-		$scope.collection.todos = $scope.events
-		$scope.weektodo[$scope.curr] = $scope.events
+		$scope.collection.calendars = $scope.events
+		$scope.weekcalendar[$scope.curr] = $scope.events
 		$scope.controller = new WeekView collection: $scope.collection	
 
 	$scope.getWeek = (fromDate) ->
@@ -679,7 +678,7 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 		result
 				
 	#start here
-	$scope.weektodo = new Array()
+	$scope.weekcalendar = new Array()
 	$scope.week = $scope.getWeek(new Date())
 	$scope.today = new Date()
 	$scope.curr = 0
@@ -687,18 +686,18 @@ WeekCtrl = ($rootScope, $scope, $state, $stateParams, $location, $filter, model)
 	$scope.fmDate = new Date($scope.fmDate.setHours(0,0,0,0))
 	$scope.toDate = $scope.week[6]
 	$scope.toDate = new Date($scope.toDate.setHours(23,59,0,0))
-	$rootScope.$broadcast 'todo:getWeekView'
+	$rootScope.$broadcast 'calendar:getWeekView'
 
 										
-TodosFilter = ->
-	(todos, search) ->
-	 	return _.filter todos, (todo) ->
+CalendarsFilter = ->
+	(calendars, search) ->
+	 	return _.filter calendars, (calendar) ->
 	 		if _.isUndefined(search)
 	 			true
 	 		else if _.isEmpty(search)
 	 			true
 	 		else	
-	 			todo.task.indexOf(search) > -1 
+	 			calendar.task.indexOf(search) > -1 
 
 # ionic-timepicker plugin directive
 standardTimeMeridian  = ->
@@ -744,16 +743,16 @@ angular.module('starter.controller', ['ionic', 'ngCordova', 'http-auth-intercept
 angular.module('starter.controller').controller 'AppCtrl', ['$rootScope', '$scope', '$http', 'platform', 'authService', 'model', AppCtrl]
 angular.module('starter.controller').controller 'MenuCtrl', ['$scope', MenuCtrl]
 
-angular.module('starter.controller').controller 'TodoEditCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', 'model', '$filter', TodoEditCtrl]
-angular.module('starter.controller').controller 'TodoCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', 'model', '$filter', TodoCtrl]
+angular.module('starter.controller').controller 'CalendarEditCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', 'model', '$filter', CalendarEditCtrl]
+angular.module('starter.controller').controller 'CalendarCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', 'model', '$filter', CalendarCtrl]
 
-angular.module('starter.controller').controller 'MyTodoListPageCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', 'model', MyTodoListPageCtrl]
+angular.module('starter.controller').controller 'MyCalendarListPageCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', 'model', MyCalendarListPageCtrl]
 angular.module('starter.controller').controller 'UpcomingListCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', '$filter', 'model', UpcomingListCtrl]
-angular.module('starter.controller').controller 'ProjectTodoCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', '$filter', 'model', ProjectTodoCtrl]
+angular.module('starter.controller').controller 'ProjectCalendarCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', '$filter', 'model', ProjectCalendarCtrl]
 
 angular.module('starter.controller').controller 'WeekCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', '$filter', 'model', WeekCtrl]
 angular.module('starter.controller').controller 'TodayCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$location', '$filter', 'model', TodayCtrl]
 
-angular.module('starter.controller').filter 'todosFilter', TodosFilter
+angular.module('starter.controller').filter 'calendarsFilter', CalendarsFilter
 
 angular.module('starter.controller').directive 'standardTimeMeridian', standardTimeMeridian 

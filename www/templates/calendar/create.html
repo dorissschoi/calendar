@@ -1,10 +1,10 @@
 <ion-view>
-	<div ng-controller="TodoCtrl">
+	<div ng-controller="CalendarCtrl">
 	<form name="myForm"  class="my-form">
 	<ion-header-bar class="item-input-inset" align-title="left">
 	    <button class="button ion-close-round" ui-sref="app.upcomingList"></button>
 	    <div class="buttons" ng-init="isDisabled = false">
-			<h1 class="title">Create Todo</h1>
+			<h1 class="title">Create Calendar</h1>
 			<button class="button button-clear button-positive" 
     		ng-click="controller.add()"
     		ng-disabled="myForm.taskname.$error.required">Save</button>	        
@@ -49,16 +49,16 @@
 				</div>
 			</div>
 			<label class="item item-input">
-				<input type="text" placeholder="Project..." name="location" ng-model="todo.project" >
+				<input type="text" placeholder="Project..." name="location" ng-model="calendar.project" >
 			</label>
 			<label class="item item-input">
-				<input type="text" placeholder="Task name..." name="taskname" ng-model="todo.task" required>
+				<input type="text" placeholder="Task name..." name="taskname" ng-model="calendar.task" required>
 			</label>
 			<label class="item item-input">
-				<input type="text" placeholder="Notes..." name="location" ng-model="todo.notes" >
+				<input type="text" placeholder="Notes..." name="location" ng-model="calendar.notes" >
 			</label>
 			<label class="item item-input">
-				<input type="text" placeholder="Location..." name="location" ng-model="todo.location" >
+				<input type="text" placeholder="Location..." name="location" ng-model="calendar.location" >
 			</label>
 		</div>
 		
