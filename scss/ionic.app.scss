@@ -1,0 +1,325 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+$select-color:	#bbd8ff;
+
+.item-avatar > img:first-child, .item-avatar .item-content > img:first-child {
+	border-radius: 0;
+}
+
+.selected {
+	background-color: $select-color;
+	
+	.item-content {
+		background-color: $select-color;
+	}
+}
+
+.filelist h2 {
+	display: table;
+	
+	> span, > .tag-editor {
+		display: table-cell;
+	}
+	
+	.tag-editor {
+		border: none;
+		background-color: inherit;
+		
+		.tag-input {
+			background-color: inherit;
+		}
+	}
+}
+
+.button-icon.overlay > i {
+	position: absolute;
+	left: 10%;
+	top: 5%;
+	transform: scale(.4, .4);
+	color: white;
+}
+
+.dirty, .dirty .item-content {
+	background-color: #F78181;
+}
+
+.input-group .form-control {
+	border: 1px solid #ccc;
+	padding: 6px 12px;
+}
+span.input-label {
+	padding: 7px 10px 7px 10px;
+	width: 100px;
+}
+
+
+
+/* angular bootstrap calendar */
+.cal-month-day .cal-events-num {
+    display: none;
+}
+.cal-day-panel .row {
+	margin-left: 0px;
+	padding: 0px;
+}
+.cal-row-fluid.cal-row-head {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+/* ionic datepicker */
+.ionic-datepicker .row {
+    margin-left: 0px;
+}
+
+.mylistfilter {
+	top: 0px;
+}
+
+/*list view*/
+.font-bold {
+    font-weight: bold;
+}
+.daterow {
+    padding: 0px;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: #ddd;
+}
+.datelist {
+	margin-left: 0px;
+	padding: 1px;
+}
+
+.datefield {
+	padding-top: 16px;
+	padding-left: 15px;
+}
+.noborder {
+	border-style: none;
+}
+.timelist {
+	padding-right: 10%
+}
+
+
+/*day view*/
+.tblday {
+	width: 100%;
+	margin: 20px
+}
+
+/*self calendar*/
+.wbkt.wk-scrolltimedevents {
+    border-top: none;
+    border-bottom: none;
+}
+.wk-scrolltimedevents {
+    direction: ltr;
+}
+.wk-scrolltimedevents {
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-top: 1px solid #ddd;
+    border-left: 0 none;
+    border-bottom: 1px solid #ddd;
+    padding: 0;
+    font-size: 17px;
+    line-height: normal;
+}
+.tg-mainwrapper {
+    position: relative;
+}
+.wbkt .tg-timedevents {
+    border-right: 1px solid #ddd;
+}
+.tg-timedevents {
+    margin-top: -2px;
+}
+.tg-timedevents {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    margin-top: -1px;
+    table-layout: fixed;
+    width: 100%;
+}
+.tg-spanningwrapper {
+    position: relative;
+    margin: 1px 0 0 1px;
+}
+.tg-hourmarkers {
+    position: absolute;
+    width: 100%;
+}
+.tg-markercell {
+    height: 84px;
+}
+.tg-dualmarker {
+    height: 42px;
+    margin-bottom: 42px;
+}
+.tg-dualmarker, .tg-dualmarker60 {
+    border-bottom: 1px dotted #ddd;
+    border-top: 1px solid #ddd;
+    font-size: 1px;
+}
+
+.tg-time-pri, .tg-time-sec {
+    border-bottom: 1px solid #ddd;
+    padding-right: 2px;
+}
+.tg-times-pri, .tg-times-sec {
+    border-left: 1px solid #ddd;
+}
+.tg-times-pri, .tg-times-sec {
+    background-color: #fff;
+    color: #555;
+    padding: 1px 0 0;
+    text-align: right;
+    vertical-align: top;
+}
+.tg-gutter {
+    position: relative;
+    height: 0;
+}
+.tg-col-eventwrapper {
+    position: relative;
+    cursor: default;
+}
+.tg-col-today {
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+}
+.chip {
+    position: absolute;
+    cursor: default;
+    color: #222;
+    -moz-user-select: none;
+}
+
+.cbrd {
+	padding: 2px 0 1px;
+    border-color: #A9ABFE;
+    background-color: #E3E3FF;
+    color: #777777;
+    margin: 0;
+    padding: 0 0 1px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    overflow: hidden;
+    border: 1px solid;
+}
+
+.chip-border {
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    border-top: 2px solid;
+    margin: -2px 0 -2px -2px;
+	border-color: #f1f1f1;
+}
+
+/*week view*/
+#gridcontainer {
+    
+    height: 300px;
+    background: #fff;
+    position: relative;
+}
+.wk-weektop {
+    table-layout: fixed;
+    width: 100%;
+    background-color: #fff;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.wk-dayname {
+    border-top: 1px solid #fff;
+    font-size: 17px;
+    font-weight: normal;
+    color: #555;
+    white-space: nowrap;
+    text-align: center;
+}
+.wk-today {
+    background: #f1f1f1;
+    background-color: #EEEDF1;
+    color: #222;
+    font-weight: bold;
+}
+.wbkt.wk-scrolltimedevents {
+    border-top: none;
+    border-bottom: none;
+}
+.wk-scrolltimedevents {
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-top: 1px solid #ddd;
+    border-left: 0 none;
+    border-bottom: 1px solid #ddd;
+    padding: 0;
+    font-size: 17px;
+    line-height: normal;
+}
+.tg-mainwrapper {
+    position: relative;
+}
+.wbkt .tg-timedevents {
+    border-right: 1px solid #ddd;
+}
+.tg-timedevents {
+    margin-top: -2px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    margin-top: -1px;
+    table-layout: fixed;
+    width: 100%;
+}
+.tg-col-today {
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+}
+.tg-col {
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+}
+.tg-today {
+    background-color: #EEEDF1;
+}
+.tg-col-overlaywrapper {
+    position: relative;
+    height: 0;
+}
+.tg-nowmarker {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    height: 0;
+    border-top: 2px solid #ff7f6e;
+    overflow: hidden;
+}

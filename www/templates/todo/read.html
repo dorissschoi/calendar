@@ -1,0 +1,74 @@
+<ion-view ng-init="button=true">
+  <form name="myForm" class="my-form">
+  <ion-header-bar>
+  	<div ng-show="button">
+  		<button class="button ion-close-round" ui-sref="app.upcomingList"></button>
+  		
+  		<h1 class="title">Read</h1>
+  		<button class="button button-clear button-positive" 
+    		ng-click="button=false">Edit</button>
+    
+    </div>
+    <div ng-hide="button">
+    	<button class="button ion-close-round" ui-sref="app.upcomingList"></button>
+    	<h1 class="title">Edit</h1>
+    	<button class="button button-clear button-positive" 
+    	ng-click="button=true;controller.update();"
+    	ng-disabled="myForm.taskname.$error.required" 
+    	ng-hide="button"
+    	>Save</button>
+    </div>
+  </ion-header-bar>
+  <ion-content padding="true">
+	<div class="list">
+	  	<label class="item item-input">
+	  	<input type="text" ng-model="model.newtask" ng-disabled="button" 
+			 required name="taskname">
+	  	</label>
+	  	<label class="item item-input">
+	  	<input type="text" ng-model="model.newlocation">
+	  	</label>
+		<div class="row">
+			<div class="col col-50"><span class="input-label">Start date</span> 
+				<ionic-datepicker idate="model.newdateStart" 
+						disablepreviousdates="false"  
+						callback="newdateStartPickerCallback">
+					    <button class="button button-block button-positive"> 
+					    {{ model.newdateStart | date:'dd - MMMM - yyyy' }} </button>
+					</ionic-datepicker>	
+			</div>
+			<div class="col"><span class="input-label">Start time</span>
+				<ionic-timepicker 
+					etime="model.newtimeStart" 
+					format="slots[0].format" 
+					step="slots[0].step" callback="newtimeStartPickerCallback">    
+					<button class="button button-block button-positive">  
+					<standard-time-meridian etime='model.newtimeStart'></standard-time-meridian>
+					</button>
+				</ionic-timepicker>
+			</div>    			  
+		</div>
+		<div class="row">
+			<div class="col col-50"><span class="input-label">End date</span>
+				<ionic-datepicker idate="model.newdateEnd" 
+					disablepreviousdates="false"  
+					callback="newdateEndPickerCallback">
+				    <button class="button button-block button-positive"> 
+				    {{ model.newdateEnd | date:'dd - MMMM - yyyy' }} </button>
+				</ionic-datepicker>			
+			</div>
+			<div class="col"><span class="input-label">End time</span>
+				<ionic-timepicker 
+					etime="model.newtimeEnd" 
+					format="slots[1].format" 
+					step="slots[1].step" callback="newtimeEndPickerCallback">    
+					<button class="button button-block button-positive">  
+					<standard-time-meridian etime='model.newtimeEnd'></standard-time-meridian> 
+					</button>
+				</ionic-timepicker>
+			</div>				  
+	  	</div>
+	</div>	    	
+  </ion-content>
+  </form>
+</ion-view>
