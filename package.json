@@ -1,9 +1,9 @@
 {
-  "name": "todo",
+  "name": "calendar",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node_modules/.bin/coffee --nodejs --debug app.coffee"
+    "start": "node_modules/.bin/coffee   app.coffee"
   },
   "dependencies": {
     "backbone": "~1.1.2",

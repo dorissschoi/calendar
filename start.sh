@@ -1,8 +1,8 @@
 #!/bin/sh
 
-root=~/prod/todouat
+root=~/prod/calendaruat
 
-export PORT=8009
+export PORT=8012
 
 
-forever start --workingDir ${root} -a -l todouat.log /usr/bin/npm start
+forever start --workingDir ${root} -a -l calendaruat.log /usr/bin/npm start
